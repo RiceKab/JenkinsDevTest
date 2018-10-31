@@ -18,6 +18,11 @@ pipeline {
                 sh '. jenkinsenv/bin/activate && pip list && pip install . && pip list'
             }
         }
+        stage('test') {
+            steps {
+                sh '. jenkinsenv/bin/activate && python setup.py test'
+            }
+        }
         stage('final') {
             environment {
                 JENKY_STAGE = 'Final'
