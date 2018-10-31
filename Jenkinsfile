@@ -13,7 +13,7 @@ pipeline {
                 sh 'python --version'
                 sh 'pip --version'
                 sh 'pip list'
-                sh 'pip install .'
+                sh 'pip install . --user'
                 sh 'pip list'
             }
         }
