@@ -12,8 +12,10 @@ pipeline {
             steps {
                 sh 'python --version'
                 sh 'pip --version'
+                sh 'virtualenv jenkinsenv'
+                sh 'source ./jenkinsenv/Scripts/activate'
                 sh 'pip list'
-                sh 'pip install . --user'
+                sh 'pip install .'
                 sh 'pip list'
             }
         }
