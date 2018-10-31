@@ -1,10 +1,10 @@
 pipeline {
     agent { docker { image 'python:2.7.15' } }
+    environment {
+        JENKY_GLOBAL = 'Hello'
+        JENKY_STAGE = 'Global'
+    }
     stages {
-        environment {
-            JENKY_GLOBAL = 'Hello'
-            JENKY_STAGE = 'Global'
-        }
         stage('build') {
             environment {
                 JENKY_STAGE = 'Build'
