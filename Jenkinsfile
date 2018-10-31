@@ -19,6 +19,9 @@ pipeline {
             }
         }
         stage('test') {
+            environment {
+                PYTHON_EGG_CACHE = ~/.py-egg-cache/
+            }
             steps {
                 sh '. jenkinsenv/bin/activate && python setup.py test'
             }
