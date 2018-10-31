@@ -5,7 +5,7 @@ pipeline {
         JENKY_STAGE = 'Global'
     }
     stages {
-        stage('build') {
+        stage('install') {
             environment {
                 JENKY_STAGE = 'Build'
             }
@@ -13,7 +13,8 @@ pipeline {
                 sh 'python --version'
                 sh 'pip --version'
                 sh 'pip list'
-                sh 'printenv'
+                sh 'pip install .'
+                sh 'pip list'
             }
         }
         stage('final') {
