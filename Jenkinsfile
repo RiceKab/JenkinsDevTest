@@ -15,10 +15,7 @@ pipeline {
                 sh 'virtualenv jenkinsenv'
                 sh 'ls jenkinsenv'
                 sh 'ls jenkinsenv/bin'
-                sh '. jenkinsenv/bin/activate'
-                sh 'pip list'
-                sh 'pip install .'
-                sh 'pip list'
+                sh '. jenkinsenv/bin/activate && pip list && pip install . && pip list'
             }
         }
         stage('final') {
