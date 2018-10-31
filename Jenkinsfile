@@ -13,6 +13,8 @@ pipeline {
                 sh 'python --version'
                 sh 'pip --version'
                 sh 'virtualenv jenkinsenv'
+                sh 'ls jenkinsenv'
+                sh 'ls jenkinsenv/Scripts'
                 sh '. jenkinsenv/Scripts/activate'
                 sh 'pip list'
                 sh 'pip install .'
