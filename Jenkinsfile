@@ -8,6 +8,7 @@ pipeline {
     environment {
         JENKY_GLOBAL = 'Hello'
         JENKY_STAGE = 'Global'
+        JENKY_SECRET = credentials('my-secret-text')
     }
     stages {
         stage('install') {
@@ -17,10 +18,9 @@ pipeline {
             steps {
                 sh 'python --version'
                 sh 'pip --version'
-                sh 'virtualenv jenkinsenv'
-                sh 'ls jenkinsenv'
-                sh 'ls jenkinsenv/bin'
-                sh '. jenkinsenv/bin/activate && pip list && pip install . && pip list'
+                sh 'pip install .'
+                sh 'pip list'
+                sh 'echo $JENKY_SECRET'
             }
         }
         stage('test') {
@@ -28,7 +28,7 @@ pipeline {
                 PYTHON_EGG_CACHE = "$HOME/.py-egg-cache/"
             }
             steps {
-                sh '. jenkinsenv/bin/activate && python setup.py test'
+                sh 'python setup.py test'
             }
         }
         stage('final') {
