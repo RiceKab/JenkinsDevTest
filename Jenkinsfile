@@ -17,8 +17,8 @@ pipeline {
             }
             steps {
                 sh 'pip install .'
-                sh 'echo $JENKY_TEST'
-                sh 'python print_secret.py'
+                sh 'echo $JENKY_SECRET'
+                sh 'python print_secret.py random_parameter $JENKY_SECRET'
             }
         }
         stage('test') {
