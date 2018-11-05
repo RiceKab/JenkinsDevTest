@@ -30,7 +30,9 @@ pipeline {
                 sh 'python setup.py pytest'
             }
         }
-        input "Good to deploy?"
+        input {
+            message "Good to deploy?"
+        }
         stage('Deploy') {
             environment {
                 JENKY_STAGE = 'Final'
