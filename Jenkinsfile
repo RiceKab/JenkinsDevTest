@@ -17,6 +17,7 @@ pipeline {
                 JENKY_STAGE = 'Build'
             }
             steps {
+                sh 'sudo yum install tree'
                 sh 'pip install .'
             }
         }
