@@ -11,16 +11,14 @@ pipeline {
         JENKY_SECRET = credentials('my-secret-text')
     }
     stages {
-        stage('install') {
+        stage('Install') {
             environment {
                 JENKY_STAGE = 'Build'
             }
             steps {
-                sh 'python --version'
-                sh 'pip --version'
                 sh 'pip install .'
-                sh 'pip list'
-                sh 'echo $JENKY_SECRET'
+                sh 'echo $JENKY_TEST'
+                sh 'python print_secret.py'
             }
         }
         stage('test') {
