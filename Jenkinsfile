@@ -28,7 +28,7 @@ pipeline {
                 PYTHON_EGG_CACHE = "$HOME/.py-egg-cache/"
             }
             steps {
-                sh 'python setup.py test'
+                sh 'python setup.py pytest'
             }
         }
         stage('final') {
