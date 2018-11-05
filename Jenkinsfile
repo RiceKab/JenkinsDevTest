@@ -17,7 +17,6 @@ pipeline {
                 JENKY_STAGE = 'Build'
             }
             steps {
-                sh 'apt-get install tree'
                 sh 'pip install .'
             }
         }
@@ -34,7 +33,7 @@ pipeline {
                 sh 'python setup.py sdist'
                 sh 'pip install sphinx'
                 sh 'sphinx-build docs docs/_build'
-                sh 'tree docs/_build'
+                sh 'ls -la docs/_build'
             }
         }
         stage('Deploy') {
@@ -46,7 +45,7 @@ pipeline {
                 sh 'mkdir ~/mysources'
                 sh 'cp -r docs/_build ~/mydocs'
                 sh 'cp dist/* ~/mysources'
-                sh 'tree ~'
+                sh 'ls -la ~'
             }
         }
     }
