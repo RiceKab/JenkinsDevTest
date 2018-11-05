@@ -9,6 +9,7 @@ pipeline {
         JENKY_GLOBAL = 'Hello'
         JENKY_STAGE = 'Global'
         JENKY_SECRET = credentials('my-secret-text')
+        JENKY_OTHER_SECRET = credentials('my-other-secret-text')
     }
     stages {
         stage('Install') {
@@ -18,7 +19,7 @@ pipeline {
             steps {
                 sh 'pip install .'
                 sh 'echo $JENKY_SECRET'
-                sh 'python print_secret.py random_parameter $JENKY_SECRET'
+                sh 'python print_secret.py random_parameter secret_parameter $JENKY_SECRET $JENKY_OTHER_SECRET'
             }
         }
         stage('test') {
