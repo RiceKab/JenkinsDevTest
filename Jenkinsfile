@@ -18,11 +18,9 @@ pipeline {
             }
             steps {
                 sh 'pip install .'
-                sh 'echo $JENKY_SECRET'
-                sh 'python print_secret.py random_parameter secret_parameter $JENKY_SECRET $JENKY_OTHER_SECRET'
             }
         }
-        stage('test') {
+        stage('Testing') {
             environment {
                 PYTHON_EGG_CACHE = "$HOME/.py-egg-cache/"
             }
@@ -30,16 +28,24 @@ pipeline {
                 sh 'python setup.py pytest'
             }
         }
+        stage('Build') {
+            steps {
+                sh 'python setup.py sdist'
+                sh 'pip install sphinx'
+                sh 'sphinx-build docs docs/_build'
+                sh 'tree docs/_build'
+            }
+        }
         stage('Deploy') {
             input {
                 message "Good to deploy?"
             }
-            environment {
-                JENKY_STAGE = 'Final'
-            }
             steps {
-                sh 'printenv'
-                sh 'ls -la'
+                sh 'mkdir ~/mydocs'
+                sh 'mkdir ~/mysources'
+                sh 'cp -r docs/_build ~/mydocs'
+                sh 'cp dist/* ~/mysources'
+                sh 'tree ~'
             }
         }
     }
