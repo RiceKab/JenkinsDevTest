@@ -34,14 +34,14 @@ pipeline {
             }
             steps{
                 script {
-                    env.DEPLOY_APPROVED = input message: "Approve deploy?", ok: 'Approve', parameters: [booleanParam(defaultValue: false, name: 'approved')]
+                    env.DEPLOY_APPROVED = input message: "Approve deployment?", ok: 'Approve', parameters: [booleanParam(defaultValue: true, name: 'Approve')]
                 }
                 sh 'echo "Value is $DEPLOY_APPROVED"'
             }
         }
         stage('Build') {
             when {
-                environment name: 'DEPLOY_APPROVED', value: 'yes'
+                environment name: 'DEPLOY_APPROVED', value: 'true'
             }
             steps {
                 sh 'python setup.py sdist'
@@ -52,7 +52,7 @@ pipeline {
         }
         stage('Deploy') {
             when {
-                environment name: 'DEPLOY_APPROVED', value: 'yes'
+                environment name: 'DEPLOY_APPROVED', value: 'true'
             }
             steps {
                 sh 'mkdir -p /export/docs'
