@@ -42,8 +42,7 @@ pipeline {
             }
             steps{
                 script {
-                    env.DEPLOY_APPROVED = input {
-                        message "Approve deploy?"
+                    env.DEPLOY_APPROVED = input message: "Approve deploy?"
                     }
                 }
             }
