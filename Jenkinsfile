@@ -37,15 +37,18 @@ pipeline {
             }
         }
         stage('Deploy') {
-            when { branch 'master' }
-            input {
-                message "Push to production?"
-            }
-            steps {
-                sh 'mkdir -p /export/docs'
-                sh 'mkdir -p /export/dist'
-                sh 'cp docs/_build/* /export/docs'
-                sh 'cp dist/* /export/dist'
+            script {
+                if (env.BRANCH_NAME == branch 'master') {
+                    input {
+                        message "Push to production?"
+                    }
+                    steps {
+                        sh 'mkdir -p /export/docs'
+                        sh 'mkdir -p /export/dist'
+                        sh 'cp -r docs/_build/* /export/docs'
+                        sh 'cp -r dist/* /export/dist'
+                    }
+                }
             }
         }
     }
