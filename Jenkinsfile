@@ -28,14 +28,6 @@ pipeline {
                 sh 'python setup.py pytest'
             }
         }
-        stage('Build') {
-            steps {
-                sh 'python setup.py sdist'
-                sh 'pip install sphinx'
-                sh 'sphinx-build docs docs/_build'
-                sh 'ls -la docs/_build'
-            }
-        }
         stage('Manual Approval') {
             when {
                 branch 'master'
@@ -44,6 +36,18 @@ pipeline {
                 script {
                     env.DEPLOY_APPROVED = input message: "Approve deploy?", ok: 'yes'
                 }
+                sh 'echo "Value is $DEPLOY_APPROVED"'
+            }
+        }
+        stage('Build') {
+            when {
+                environment name: 'DEPLOY_APPROVED', value: 'yes'
+            }
+            steps {
+                sh 'python setup.py sdist'
+                sh 'pip install sphinx'
+                sh 'sphinx-build docs docs/_build'
+                sh 'ls -la docs/_build'
             }
         }
         stage('Deploy') {
