@@ -2,7 +2,7 @@ pipeline {
     agent {
         docker {
             image 'python:2.7.15'
-            args '-u root:root'
+            args '-u root:root -v /var/jenky/output:/export'
         }
     }
     environment {
@@ -17,6 +17,8 @@ pipeline {
                 JENKY_STAGE = 'Build'
             }
             steps {
+                sh 'ls /'
+                sh 'ls /export'
                 sh 'pip install .'
             }
         }
