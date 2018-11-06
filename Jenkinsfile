@@ -17,8 +17,6 @@ pipeline {
                 JENKY_STAGE = 'Build'
             }
             steps {
-                sh 'ls /'
-                sh 'ls /export'
                 sh 'pip install .'
             }
         }
@@ -40,14 +38,13 @@ pipeline {
         }
         stage('Deploy') {
             input {
-                message "Good to deploy?"
+                message "Good to export?"
             }
             steps {
-                sh 'mkdir ~/mydocs'
-                sh 'mkdir ~/mysources'
-                sh 'cp -r docs/_build ~/mydocs'
-                sh 'cp dist/* ~/mysources'
-                sh 'ls -la ~'
+                sh 'mkdir /export/docs'
+                sh 'mkdir /export/dist'
+                sh 'cp -r docs/_build /export/docs'
+                sh 'cp dist/* /export/dist'
             }
         }
     }
