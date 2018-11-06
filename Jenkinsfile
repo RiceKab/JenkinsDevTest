@@ -36,26 +36,27 @@ pipeline {
                 sh 'ls -la docs/_build'
             }
         }
+        stage('Manual Approval') {
+            when {
+                branch 'master'
+            }
+            steps{
+                script {
+                    env.DEPLOY_APPROVED = input {
+                        message "Approve deploy?"
+                    }
+                }
+            }
+        }
         stage('Deploy') {
-            stages {
-                stage('Deploy Master') {
-                    when { branch 'master' }
-                    input {
-                        message "Push to production?"
-                    }
-                    steps{
-                        sh 'mkdir -p /export/docs'
-                        sh 'mkdir -p /export/dist'
-                        sh 'cp -r docs/_build/* /export/docs'
-                        sh 'cp -r dist/* /export/dist'
-                    }
-                }
-                stage('Deploy Others') {
-                    when { not { branch 'master' }}
-                    steps{
-                        sh 'echo We are in the $BRANCH_NAME branch'
-                    }
-                }
+            when {
+                environment name: 'DEPLOY_APPROVED', value: 'yes'
+            }
+            steps{
+                sh 'mkdir -p /export/docs'
+                sh 'mkdir -p /export/dist'
+                sh 'cp -r docs/_build/* /export/docs'
+                sh 'cp -r dist/* /export/dist'
             }
         }
     }
