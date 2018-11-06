@@ -34,7 +34,10 @@ pipeline {
             }
             steps{
                 script {
-                    env.DEPLOY_APPROVED = input message: "Approve deploy?", ok: 'yes'
+                    env.DEPLOY_APPROVED = input {
+                        message: "Approve deploy?"
+                        ok: 'yes'
+                    }
                 }
                 sh 'echo "Value is $DEPLOY_APPROVED"'
             }
