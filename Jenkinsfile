@@ -38,7 +38,7 @@ pipeline {
         }
         stage('Deploy') {
             script {
-                if (env.BRANCH_NAME == branch 'master') {
+                if (env.BRANCH_NAME == 'master') {
                     input {
                         message "Push to production?"
                     }
