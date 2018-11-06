@@ -37,23 +37,15 @@ pipeline {
             }
         }
         stage('Deploy') {
-            switch (env.BRANCH_NAME) {
-                case 'master':
-                    input {
-                        message "Push to production?"
-                    }
-                    steps {
-                        sh 'echo In master branch'
-                        sh 'mkdir /export/docs'
-                        sh 'mkdir /export/dist'
-                        sh 'cp docs/_build/* /export/docs'
-                        sh 'cp dist/* /export/dist'
-                    }
-                    break;
-                default:
-                    steps {
-                        sh 'echo Not in master but in $BRANCH_NAME'
-                    }
+            when { branch 'master' }
+            input {
+                message "Push to production?"
+            }
+            steps {
+                sh 'mkdir /export/docs'
+                sh 'mkdir /export/dist'
+                sh 'cp docs/_build/* /export/docs'
+                sh 'cp dist/* /export/dist'
             }
         }
     }
