@@ -43,7 +43,6 @@ pipeline {
             steps{
                 script {
                     env.DEPLOY_APPROVED = input message: "Approve deploy?"
-                    }
                 }
             }
         }
@@ -51,7 +50,7 @@ pipeline {
             when {
                 environment name: 'DEPLOY_APPROVED', value: 'yes'
             }
-            steps{
+            steps {
                 sh 'mkdir -p /export/docs'
                 sh 'mkdir -p /export/dist'
                 sh 'cp -r docs/_build/* /export/docs'
