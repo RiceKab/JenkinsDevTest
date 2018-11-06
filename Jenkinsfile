@@ -37,18 +37,21 @@ pipeline {
             }
         }
         stage('Deploy') {
-            script {
-                if (env.BRANCH_NAME == 'master') {
-                    input {
-                        message "Push to production?"
-                    }
-                    steps {
+            steps {
+                script {
+                    if (env.BRANCH_NAME == 'master') {
+                        input {
+                            message "Push to production?"
+                        }
                         sh 'mkdir -p /export/docs'
                         sh 'mkdir -p /export/dist'
                         sh 'cp -r docs/_build/* /export/docs'
                         sh 'cp -r dist/* /export/dist'
+                    } else {
+                        echo 'not master but $BRANCH_NAME'
                     }
                 }
+                echo 'after script block'
             }
         }
     }
