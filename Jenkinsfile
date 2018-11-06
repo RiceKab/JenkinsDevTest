@@ -34,7 +34,7 @@ pipeline {
             }
             steps{
                 script {
-                    env.DEPLOY_APPROVED = input message: "Approve deploy?", ok: 'Approve', parameters: [[$class: 'BooleanParameterDefinition', defaultValue: false, name: 'approved']]
+                    env.DEPLOY_APPROVED = input message: "Approve deploy?", ok: 'Approve', parameters: [booleanParam(defaultValue: false, name: 'approved')]
                 }
                 sh 'echo "Value is $DEPLOY_APPROVED"'
             }
