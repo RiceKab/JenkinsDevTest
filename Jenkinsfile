@@ -42,8 +42,8 @@ pipeline {
                 message "Push to production?"
             }
             steps {
-                sh 'mkdir /export/docs'
-                sh 'mkdir /export/dist'
+                sh 'mkdir -p /export/docs'
+                sh 'mkdir -p /export/dist'
                 sh 'cp docs/_build/* /export/docs'
                 sh 'cp dist/* /export/dist'
             }
