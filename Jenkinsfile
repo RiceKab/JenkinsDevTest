@@ -12,19 +12,12 @@ pipeline {
         JENKY_OTHER_SECRET = credentials('my-other-secret-text')
     }
     stages {
-        //stage('Install') {
-        //    environment {
-        //        JENKY_STAGE = 'Build'
-        //    }
-        //    steps {
-        //        sh 'pip install .'
-        //    }
-        //}
         stage('Testing') {
             environment {
                 PYTHON_EGG_CACHE = "$HOME/.py-egg-cache/"
             }
             steps {
+                sh 'pip install .'
                 sh 'python setup.py pytest'
             }
         }
