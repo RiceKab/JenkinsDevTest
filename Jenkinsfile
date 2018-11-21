@@ -12,14 +12,14 @@ pipeline {
         JENKY_OTHER_SECRET = credentials('my-other-secret-text')
     }
     stages {
-        stage('Install') {
-            environment {
-                JENKY_STAGE = 'Build'
-            }
-            steps {
-                sh 'pip install .'
-            }
-        }
+        //stage('Install') {
+        //    environment {
+        //        JENKY_STAGE = 'Build'
+        //    }
+        //    steps {
+        //        sh 'pip install .'
+        //    }
+        //}
         stage('Testing') {
             environment {
                 PYTHON_EGG_CACHE = "$HOME/.py-egg-cache/"
@@ -28,21 +28,21 @@ pipeline {
                 sh 'python setup.py pytest'
             }
         }
-        stage('Manual Approval') {
-            when {
-                branch 'master'
-            }
-            steps{
-                script {
-                    env.DEPLOY_APPROVED = input message: "Approve deployment?", ok: 'Approve', parameters: [booleanParam(defaultValue: true, name: 'Approve')]
-                }
-                sh 'echo "Value is $DEPLOY_APPROVED"'
-            }
-        }
+        //stage('Manual Approval') {
+        //    when {
+        //        branch 'master'
+        //    }
+        //    steps{
+        //        script {
+        //            env.DEPLOY_APPROVED = input message: "Approve deployment?", ok: 'Approve', parameters: [booleanParam(defaultValue: true, name: 'Approve')]
+        //        }
+        //        sh 'echo "Value is $DEPLOY_APPROVED"'
+        //    }
+        //}
         stage('Build') {
-            when {
-                environment name: 'DEPLOY_APPROVED', value: 'true'
-            }
+        //    when {
+        //        environment name: 'DEPLOY_APPROVED', value: 'true'
+        //    }
             steps {
                 sh 'python setup.py sdist'
                 sh 'pip install sphinx'
@@ -51,9 +51,9 @@ pipeline {
             }
         }
         stage('Deploy') {
-            when {
-                environment name: 'DEPLOY_APPROVED', value: 'true'
-            }
+        //    when {
+        //        environment name: 'DEPLOY_APPROVED', value: 'true'
+        //    }
             steps {
                 sh 'mkdir -p /export/docs'
                 sh 'mkdir -p /export/dist'
